@@ -1,14 +1,13 @@
 import requests
 
 class TestCookie:
-      def test_cookie(self):
-response = requests.get("https://playground.learnqa.ru/api/homework_cookie")
-cookie_value = dict(response.cookies) #
-for key in cookie_value:
-    print(cookie_value[key])
-else:
-    print(key)
-assert "HomeWork" in cookie_value, "These cookies are not in the response"
-expected_respose_key = key
-expected_respose_value = cookie_value[key]
-assert expected_respose_key == expected_respose_value, "Cookies is not correct"
+    def test_cookie(self):
+        response = requests.get("https://playground.learnqa.ru/api/homework_cookie")
+        print(dict(response.cookies))
+        cookie_value = response.cookies.get('HomeWork')
+        cookies = {'HomeWork': cookie_value}
+        print(cookies)
+        cookie_key = "HomeWork"
+        cookie_value = "hw_value"
+        assert cookie_key in response.cookies, "There is not key 'HomeWork' in the cookie"
+        assert cookies[cookie_key] == cookie_value, "There is not value 'hw_value' in the cookie"
