@@ -44,3 +44,7 @@ class Assertions:
     def assert_code_status(response: Response, expected_status_code):
         assert response.status_code == expected_status_code, \
             f"Unexpected status code! Expected: {expected_status_code}. Actual: {response.status_code}"
+
+    # @staticmethod
+    # def assert_json_value_error_unicode(response: Response, name, expected_value_unicode):
+    #     assert response.content = expected_value_unicode,  f"Unexpected response content b'{response.content}'"

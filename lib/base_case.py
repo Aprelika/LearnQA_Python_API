@@ -45,3 +45,14 @@ class BaseCase:
             'lastName': 'learnqa',
             'email': 'sddfdfdfds@example.com'
             }
+
+    def prepare_registration_data_last_name(self, lastName=None):
+        if lastName is None:
+            lastName = ''.join(random.choices(string.ascii_letters, k=260))
+        return {
+            'password': '123',
+            'username': "username",
+            'firstName': 'learnqa',
+            'lastName': lastName,
+            'email': 'sddfdfdfds@example.com'
+        }
