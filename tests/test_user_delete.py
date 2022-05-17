@@ -1,8 +1,11 @@
 from lib.my_requests import MyRequests
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
+import allure
 
+@allure.epic("Проверка удаления пользователя")
 class TestUserDelete(BaseCase): # - 1. Удаление пользователя по ID 2
+    @allure.description("Удаление другого пользователя существующей УЗ")
     def test_user_delete_auth_another_user(self):
         login_data = {
             'email': 'vinkotov@example.com',
@@ -15,6 +18,8 @@ class TestUserDelete(BaseCase): # - 1. Удаление пользователя
         response2 = MyRequests.delete(f"/user/{userid}", headers={"x-csrf-token": token}, cookies={"auth_sid": auth_sid})
         Assertions.assert_code_status(response2, 400)
         assert response2.content.decode("utf-8") == f"Please, do not delete test users with ID 1, 2, 3, 4 or 5."
+
+    @allure.description("Проверка удаления собственной УЗ ")
     def test_user_auth_and_delete(self): # Позитивный тест на создание пользователя/его же удаление и проверка, что действительно удален
         register_data = self.prepare_registration_data() # Создаем пользователя
         response1 = MyRequests.post("/user/", data=register_data)
@@ -38,6 +43,8 @@ class TestUserDelete(BaseCase): # - 1. Удаление пользователя
         response4 = MyRequests.get(f"/user/{user_id}")
         Assertions.assert_code_status(response4, 404)
         assert response4.content.decode("utf-8") == f"User not found"
+
+    @allure.description("Удаление любого пользователя созданной УЗ")
     def test_negative_delete_user(self): # Удалить пользователя будучи авторизованным другим пользователем
 # Создаем пользователей
         register_data1 = self.prepare_registration_data()
