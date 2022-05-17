@@ -47,7 +47,7 @@ class TestUserGet(BaseCase):
         headers = {"x-csrf-token": token},
         cookies = {"auth_sid": auth_sid}
         )
-        print(response2.text)
+        # assert response2.content.decode("utf-8") == f"User not found"
         Assertions.assert_json_has_key(response2, "username")
         Assertions.assert_json_has_not_key(response2, "email")
         Assertions.assert_json_has_not_key(response2, "firstName")
